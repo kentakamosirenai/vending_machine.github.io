@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>キャンパスマップ</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map {
+            height: 100vh; /* マップの高さを画面いっぱいに設定 */
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        // Leafletマップの初期化
+        const map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: -2,
+        });
+
+        const imageWidth = 2040; // マップ画像の横幅
+        const imageHeight = 2640; // マップ画像の縦幅
+        const bounds = [[0, 0], [imageHeight, imageWidth]];
+
+        L.imageOverlay('images/campus_map.jpg', bounds).addTo(map);
+        map.fitBounds(bounds);
+
+        const pins = [
+            { position: [1290, 1370], name: '自販機コーナー', url: 'vending_machine1.html' },
+            { position: [1040, 1370], name: '食堂前', url: 'vending_machine2.html' },
+            { position: [1040, 1310], name: 'ラーコモ横', url: 'vending_machine3.html' },
+            { position: [1550, 1510], name: '体育館アリーナ右', url: 'vending_machine4.html' },
+            { position: [1550, 1480], name: '総合体育館前', url: 'vending_machine5.html' },
+            { position: [1550, 950], name: 'テニスコート', url: 'vending_machine6.html' },
+            { position: [1020, 1520], name: 'サークル棟Ⅱ', url: 'vending_machine7.html' },
+            { position: [980, 1435], name: '４号館１F', url: 'vending_machine8.html' },
+            { position: [1050, 1000], name: '７号館１F', url: 'vending_machine9.html' },
+            { position: [850, 1000], name: '８号館付近', url: 'vending_machine10.html' },
+            { position: [1540, 1080], name: '100周年アリーナ', url: 'vending_machine11.html' },
+            { position: [1180, 1400], name: '３号館入口', url: 'vending_machine12.html' },
+            { position: [1510, 1550], name: 'サークル棟Ⅰ', url: 'vending_machine13.html' },
+            { position: [1210, 1000], name: '駐輪場付近', url: 'vending_machine14.html' }
+        ];
+
+        pins.forEach(pin => {
+            L.marker(pin.position, { title: pin.name }).addTo(map)
+                .on('click', function() {
+                    window.open(pin.url, '_blank'); // 新しいタブで開く
+                });
+        });
+    </script>
+</body>
+</html>
